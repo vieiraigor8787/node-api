@@ -12,15 +12,7 @@ mongoose.connect(
 //registrando o modulo product
 requireDir('./src/models')
 
-//primeira rota
-app.get('/', (req, res) => {
-    Product.creat({
-        title: 'react native',
-        description: 'build native apps with React',
-        url: 'https://github.com/facebook/react-native'
-    })
-        
-    return res.send('hello ergow')
-})
+//rotas
+app.use('/api', require('./src/routes'))
 
 app.listen(3001)
