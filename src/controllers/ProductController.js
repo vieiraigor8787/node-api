@@ -7,8 +7,23 @@ module.exports = {
         return res.json(produtos)
     },
 
-    async store(req,res) {
+    async show(req, res) { //detalhe
+        const product = await Product.findById(req.params.id)
+        return res.json(product)
+    },
+
+    async store(req,res) { //criação = Post
         const product = await Product.create(req.body)
         return res.json(product)
+    },
+
+    async update(req,res) { //put
+        const product = await Product.findByIdAndUpdate(req.params.id, req.body, { new: true } /*mangoose retorna o produto atualizado pra variavel product*/ )
+        return res.json(product)
+    },
+
+    async destroy(req,res) { //excluindo
+        await Product.findByIdAndRemove(req.params.id)
+        return res.send()
     }
 }
