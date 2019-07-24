@@ -3,17 +3,18 @@ const Product = mongoose.model('Product')
 
 module.exports = {
     async index(req,res) {//lista todos os registros da base de dados
-        const produtos = await Product.find()
+        const { page } = req.query //query => parametros GET
+        const produtos = await Product.paginate( {/*condições, filtros...*/}, {page, limit: 10} )
         return res.json(produtos)
     },
 
     async show(req, res) { //detalhe
-        const product = await Product.findById(req.params.id)
+        const product = await Product.findById(req.params.id) //id definidos em rota
         return res.json(product)
     },
 
     async store(req,res) { //criação = Post
-        const product = await Product.create(req.body)
+        const product = await Product.create(req.body) //corpo da requisição
         return res.json(product)
     },
 
